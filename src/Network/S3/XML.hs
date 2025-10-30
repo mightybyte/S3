@@ -63,7 +63,7 @@ xsd'string elNameExpected el
 xsd'dateTime :: X.QName -> X.Element -> Either String UTCTime
 xsd'dateTime n el = do
   t <- xsd'string n el
-  case DT.parseTime DT.defaultTimeLocale "%Y-%m-%dT%H:%M:%S%QZ" (T.unpack t) of
+  case DT.parseTimeM True DT.defaultTimeLocale "%Y-%m-%dT%H:%M:%S%QZ" (T.unpack t) of
     Nothing -> Left ("<" <> showQN (X.elName el) <> "> failed to decode xsd:dateTime")
     Just dt -> pure dt
 
